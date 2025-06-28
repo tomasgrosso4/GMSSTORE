@@ -46,6 +46,11 @@
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
 
+        /* NOVO ESTILO: Garante que o conteúdo do produto preenche o espaço */
+        .product-card > div { /* Aplica flex-grow à div que contém a imagem e o texto */
+            flex-grow: 1;
+        }
+
         .nav-btn {
             display: inline-block;
             padding: 0.5rem 1rem;
@@ -83,61 +88,67 @@
 
     <main class="max-w-6xl mx-auto mt-16 p-4">
         <h2 class="text-5xl font-extrabold text-center mb-12 text-gray-900">Todas as T-shirts</h2>
-        <section class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-8 mb-16">
-            <div class="product-card">
-                <div> <img src="img/tshirt-branca-frente.jpg" alt="T-shirt Branca GMS" class="rounded-xl mb-4 w-full h-auto object-cover" />
-                    <h3 class="text-2xl font-bold text-gray-900">T-shirt "C'est la vie"</h3>
-                    <p class="text-gray-600 mt-2">Conforto e versatilidade para qualquer ocasião. Veste a tua atitude com estilo.</p>
-                    <p class="mt-4 font-extrabold text-2xl text-gray-900">€19.99</p>
-                </div>
-                <a href="tshirt-branca.html" class="mt-6 w-full btn-primary text-center block">Ver Produto</a>
-            </div>
+      <section class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-8 mb-16">
+    <div class="product-card">
+        <div class="product-content"> 
+            <img src="img/tshirt-branca-frente.jpg" alt="T-shirt Branca GMS" class="rounded-xl mb-4 w-full h-auto object-cover" />
+            <h3 class="text-2xl font-bold text-gray-900">T-shirt "C'est la vie"</h3>
+            <p class="text-gray-600 mt-2">Conforto e versatilidade para qualquer ocasião. Veste a tua atitude com estilo.</p>
+            <p class="mt-4 font-extrabold text-2xl text-gray-900">€19.99</p>
+        </div>
+        <a href="tshirt-branca.html" class="mt-6 w-full btn-primary text-center block">Ver Produto</a>
+    </div>
 
-            <div class="product-card">
-                <div> <img src="img/tshirt-preta-frente.jpg" alt="T-shirt Preta GMS" class="rounded-xl mb-4 w-full h-auto object-cover" />
-                    <h3 class="text-2xl font-bold text-gray-900">T-shirt "No Pressure"</h3>
-                    <p class="text-gray-600 mt-2">Elegância e modernidade no seu dia a dia. Perfeita para um look minimalista.</p>
-                    <p class="mt-4 font-extrabold text-2xl text-gray-900">€21.99</p>
-                </div>
-                <a href="tshirt-preta.html" class="mt-6 w-full btn-primary text-center block">Ver Produto</a>
-            </div>
+    <div class="product-card">
+        <div class="product-content">
+            <img src="img/tshirt-preta-frente.jpg" alt="T-shirt Preta GMS" class="rounded-xl mb-4 w-full h-auto object-cover" />
+            <h3 class="text-2xl font-bold text-gray-900">T-shirt "No Pressure"</h3>
+            <p class="text-gray-600 mt-2">Elegância e modernidade no seu dia a dia. Perfeita para um look minimalista.</p>
+            <p class="mt-4 font-extrabold text-2xl text-gray-900">€21.99</p>
+        </div>
+        <a href="tshirt-preta.html" class="mt-6 w-full btn-primary text-center block">Ver Produto</a>
+    </div>
 
-            <div class="product-card">
-                <div> <img src="img/tshirt-beje-frente.jpg" alt="T-shirt Bege GMS" class="rounded-xl mb-4 w-full h-auto object-cover" />
-                    <h3 class="text-2xl font-bold text-gray-900">T-shirt "Free"</h3>
-                    <p class="text-gray-600 mt-2">A combinação perfeita para um estilo descontraído e leve. Sinta-se livre para ser quem és.</p>
-                    <p class="mt-4 font-extrabold text-2xl text-gray-900">€18.50</p>
-                </div>
-                <a href="tshirt-bege.html" class="mt-6 w-full btn-primary text-center block">Ver Produto</a>
-            </div>
+    <div class="product-card">
+        <div class="product-content"> 
+            <img src="img/tshirt-bege-frente.jpg" alt="T-shirt Feelings GMS" class="rounded-xl mb-4 w-full h-auto object-cover" />
+            <h3 class="text-2xl font-bold text-gray-900">T-shirt "Feelings"</h3>
+            <p class="text-gray-600 mt-2">Mais que um órgão, o coração é a casa dos sentimentos. Vista a sua emoção.</p>
+            <p class="mt-4 font-extrabold text-2xl text-gray-900">€18.50</p>
+        </div>
+        <a href="tshirt-bege.html" class="mt-6 w-full btn-primary text-center block">Ver Produto</a>
+    </div>
 
-            <div class="product-card">
-                <div> <img src="img/tshirt-azul-frente.jpg" alt="T-shirt Azul Marinho GMS" class="rounded-xl mb-4 w-full h-auto object-cover" />
-                    <h3 class="text-2xl font-bold text-gray-900">T-shirt "Infinite"</h3>
-                    <p class="text-gray-600 mt-2">Um design que te leva para o infinito. Perfeita para um look sofisticado e casual.</p>
-                    <p class="mt-4 font-extrabold text-2xl text-gray-900">€22.50</p>
-                </div>
-                <a href="tshirt-azul.html" class="mt-6 w-full btn-primary text-center block">Ver Produto</a>
-            </div>
+    <div class="product-card">
+        <div class="product-content"> 
+            <img src="img/tshirt-azul-frente.jpg" alt="T-shirt Azul Marinho GMS" class="rounded-xl mb-4 w-full h-auto object-cover" />
+            <h3 class="text-2xl font-bold text-gray-900">T-shirt "Karma"</h3>
+            <p class="text-gray-600 mt-2">Um design moderno com uma mensagem que o fará pensar. Vista o seu karma.</p>
+            <p class="mt-4 font-extrabold text-2xl text-gray-900">€22.50</p>
+        </div>
+        <a href="tshirt-azul.html" class="mt-6 w-full btn-primary text-center block">Ver Produto</a>
+    </div>
 
-            <div class="product-card">
-                <div> <img src="img/tshirt-verde-frente.jpg" alt="T-shirt Verde Oliva GMS" class="rounded-xl mb-4 w-full h-auto object-cover" />
-                    <h3 class="text-2xl font-bold text-gray-900">T-shirt "Nature"</h3>
-                    <p class="text-gray-600 mt-2">Um toque de natureza para o seu guarda-roupa. Conecte-se com o seu lado mais natural.</p>
-                    <p class="mt-4 font-extrabold text-2xl text-gray-900">€20.00</p>
-                </div>
-                <a href="tshirt-verde.html" class="mt-6 w-full btn-primary text-center block">Ver Produto</a>
-            </div>
+    <div class="product-card">
+        <div class="product-content"> 
+            <img src="img/tshirt-verde-frente.jpg" alt="T-shirt Verde Oliva GMS" class="rounded-xl mb-4 w-full h-auto object-cover" />
+            <h3 class="text-2xl font-bold text-gray-900">T-shirt "Nature"</h3>
+            <p class="text-gray-600 mt-2">Esta t-shirt celebra a natureza, com uma cerejeira em flor nas costas para que possa "respirar o ar mais puro".</p>
+            <p class="mt-4 font-extrabold text-2xl text-gray-900">€20.00</p>
+        </div>
+        <a href="tshirt-verde.html" class="mt-6 w-full btn-primary text-center block">Ver Produto</a>
+    </div>
 
-            <div class="product-card">
-                <div> <img src="img/tshirt-cinza-frente.jpg" alt="T-shirt Cinza Mescla GMS" class="rounded-xl mb-4 w-full h-auto object-cover" />
-                    <h3 class="text-2xl font-bold text-gray-900">T-shirt "GMS Essential"</h3>
-                    <p class="text-gray-600 mt-2">Ideal para o dia a dia, com conforto extra. A peça essencial que não pode faltar.</p>
-                    <p class="mt-4 font-extrabold text-2xl text-gray-900">€17.99</p>
-                </div>
-                <a href="tshirt-cinza.html" class="mt-6 w-full btn-primary text-center block">Ver Produto</a>
-            </div>
-        </section>
+    <div class="product-card">
+        <div class="product-content"> 
+            <img src="img/tshirt-cinza-frente.jpg" alt="T-shirt Cinza Mescla GMS" class="rounded-xl mb-4 w-full h-auto object-cover" />
+            <h3 class="text-2xl font-bold text-gray-900">T-shirt "Show Your Love"</h3>
+            <p class="text-gray-600 mt-2">"Show your love, Different from normal" - uma t-shirt com uma mensagem ousada e um design que se destaca.</p>
+            <p class="mt-4 font-extrabold text-2xl text-gray-900">€17.99</p>
+        </div>
+        <a href="tshirt-cinza.html" class="mt-6 w-full btn-primary text-center block">Ver Produto</a>
+    </div>
+</section>
     </main>
 
     <footer class="bg-white mt-20 py-8 shadow-inner text-center text-gray-600 text-sm">
