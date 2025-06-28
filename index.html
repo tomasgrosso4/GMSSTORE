@@ -1071,14 +1071,18 @@ const dotsContainer = document.querySelector('.carousel-dots'); // Seleciona o c
 let currentIndex = 0; // Mantém o índice do slide atualmente visível, começando em 0.
 
 // Limpa quaisquer pontos de navegação existentes e cria novos para os slides definidos.
-dotsContainer.innerHTML = ''; // Limpa o conteúdo atual do contêiner de pontos.
-for (let i = 0; i < slideCount; i++) {
-    const dot = document.createElement('span'); // Cria um novo elemento <span> para cada ponto.
-    dot.classList.add('dot'); // Adiciona a classe 'dot' para estilização.
-    dot.setAttribute('data-index', i); // Atribui um atributo 'data-index' para identificar qual slide o ponto representa.
-    dotsContainer.appendChild(dot); // Adiciona o ponto ao contêiner de pontos.
-    dot.addEventListener('click', () => goToSlide(i)); // Adiciona um ouvinte de evento de clique para navegar para o slide correspondente.
+// Adicionado verificação para garantir que dotsContainer existe antes de manipulá-lo
+if (dotsContainer) {
+    dotsContainer.innerHTML = ''; // Limpa o conteúdo atual do contêiner de pontos.
+    for (let i = 0; i < slideCount; i++) {
+        const dot = document.createElement('span'); // Cria um novo elemento <span> para cada ponto.
+        dot.classList.add('dot'); // Adiciona a classe 'dot' para estilização.
+        dot.setAttribute('data-index', i); // Atribui um atributo 'data-index' para identificar qual slide o ponto representa.
+        dotsContainer.appendChild(dot); // Adiciona o ponto ao contêiner de pontos.
+        dot.addEventListener('click', () => goToSlide(i)); // Adiciona um ouvinte de evento de clique para navegar para o slide correspondente.
+    }
 }
+
 
 const dots = document.querySelectorAll('.dot'); // Seleciona todos os pontos de navegação recém-criados.
 
@@ -1086,9 +1090,12 @@ const dots = document.querySelectorAll('.dot'); // Seleciona todos os pontos de 
  * Atualiza a exibição do carrossel, movendo os slides e ativando o ponto correspondente.
  */
 function updateCarousel() {
-    // Move o contêiner dos slides horizontalmente para exibir o slide atual.
-    // O valor é negativo e multiplicado por 100% para mover 100% da largura do slide.
-    slides.style.transform = `translateX(${-currentIndex * 100}%)`;
+    // Adicionado verificação para garantir que slides existe antes de manipulá-lo
+    if (slides) {
+        // Move o contêiner dos slides horizontalmente para exibir o slide atual.
+        // O valor é negativo e multiplicado por 100% para mover 100% da largura do slide.
+        slides.style.transform = `translateX(${-currentIndex * 100}%)`;
+    }
     // Itera sobre todos os pontos para adicionar/remover a classe 'active'.
     dots.forEach((dot, index) => {
         // Adiciona a classe 'active' ao ponto se o seu índice corresponder ao currentIndex, caso contrário, remove.
@@ -1105,21 +1112,29 @@ function goToSlide(index) {
     updateCarousel(); // Chama a função para atualizar a exibição do carrossel.
 }
 
-// Adiciona ouvinte de evento ao botão "Anterior".
-prevButton.addEventListener('click', () => {
-    // Decrementa o currentIndex. Se já estiver no primeiro slide (0), volta para o último slide.
-    currentIndex = (currentIndex > 0) ? currentIndex - 1 : slideCount - 1;
-    updateCarousel(); // Atualiza a exibição do carrossel.
-});
+// Adicionado verificação para garantir que prevButton existe antes de adicionar o listener
+if (prevButton) {
+    prevButton.addEventListener('click', () => {
+        // Decrementa o currentIndex. Se já estiver no primeiro slide (0), volta para o último slide.
+        currentIndex = (currentIndex > 0) ? currentIndex - 1 : slideCount - 1;
+        updateCarousel(); // Atualiza a exibição do carrossel.
+    });
+}
 
-// Adiciona ouvinte de evento ao botão "Próximo".
-nextButton.addEventListener('click', () => {
-    // Incrementa o currentIndex. Se já estiver no último slide, volta para o primeiro slide.
-    currentIndex = (currentIndex < slideCount - 1) ? currentIndex + 1 : 0;
-    updateCarousel(); // Atualiza a exibição do carrossel.
-});
 
-updateCarousel(); // Inicializa o carrossel na página ao carregar.
+// Adicionado verificação para garantir que nextButton existe antes de adicionar o listener
+if (nextButton) {
+    nextButton.addEventListener('click', () => {
+        // Incrementa o currentIndex. Se já estiver no último slide, volta para o primeiro slide.
+        currentIndex = (currentIndex < slideCount - 1) ? currentIndex + 1 : 0;
+        updateCarousel(); // Atualiza a exibição do carrossel.
+    });
+}
+
+// Inicializa o carrossel na página ao carregar, apenas se o elemento slides existir
+if (slides) {
+    updateCarousel();
+}
 
 
 // --- Lógica de Login e Nome do Utilizador ---
@@ -1147,7 +1162,9 @@ function updateLoginDisplay() {
 
     if (loggedInUserName) { // Se um nome de utilizador logado existir:
         userInfoSpan.textContent = `Olá, ${loggedInUserName}!`; // Exibe a mensagem de boas-vindas.
-        loginBtn.style.display = 'none'; // Esconde o botão de login original.
+        if (loginBtn) { // Verifica se loginBtn existe
+            loginBtn.style.display = 'none'; // Esconde o botão de login original.
+        }
 
         // Cria o botão "Sair" (Logout).
         const logoutButton = document.createElement('a');
@@ -1163,7 +1180,10 @@ function updateLoginDisplay() {
             window.location.reload(); // Recarrega a página para atualizar a interface.
         });
         // Insere o botão de logout antes do link 'contacto.html' na navegação.
-        mainNav.insertBefore(logoutButton, mainNav.querySelector('a[href="contacto.html"]'));
+        if (mainNav && mainNav.querySelector('a[href="contacto.html"]')) { // Verifica se mainNav e o link de contacto existem
+            mainNav.insertBefore(logoutButton, mainNav.querySelector('a[href="contacto.html"]'));
+        }
+
 
         if (isAdminLoggedIn === 'true') { // Se o utilizador logado for um administrador:
             // Cria o botão "Administrador".
@@ -1173,11 +1193,15 @@ function updateLoginDisplay() {
             adminButton.id = 'admin-btn'; // Define um ID.
             adminButton.textContent = "Administrador"; // Define o texto do botão.
             // Insere o botão de administrador antes do botão de logout.
-            mainNav.insertBefore(adminButton, logoutButton);
+            if (mainNav && logoutButton.parentNode) { // Verifica se mainNav e logoutButton já foi inserido
+                mainNav.insertBefore(adminButton, logoutButton);
+            }
         }
     } else { // Se nenhum utilizador estiver logado:
         userInfoSpan.textContent = ''; // Limpa o texto da informação do utilizador.
-        loginBtn.style.display = 'inline-block'; // Torna o botão de login visível.
+        if (loginBtn) { // Verifica se loginBtn existe
+            loginBtn.style.display = 'inline-block'; // Torna o botão de login visível.
+        }
     }
 }
 
@@ -1187,35 +1211,35 @@ function updateLoginDisplay() {
 
 const termsModalOverlay = document.getElementById('terms-modal-overlay'); // Seleciona o overlay do modal.
 const modalCloseBtn = document.getElementById('modal-close-btn'); // Seleciona o botão de fechar dentro do modal.
-const showTermsInlineBtn = document.getElementById('showTermsInlineBtn'); // Esta variável é declarada, mas o ID 'showTermsInlineBtn' não está presente no HTML fornecido. Se existisse, seria um botão para abrir o modal.
+// Esta variável é declarada, mas o ID 'showTermsInlineBtn' não está presente no HTML fornecido. Se existisse, seria um botão para abrir o modal.
+const showTermsInlineBtn = document.getElementById('showTermsInlineBtn'); 
 const showTermsFooterBtn = document.getElementById('showTermsFooterBtn'); // Seleciona o botão no rodapé que abre o modal.
 
 /**
  * Abre o modal de termos.
  */
 function openModal() {
-    termsModalOverlay.classList.add('visible'); // Adiciona a classe 'visible' para exibir o overlay do modal.
-    document.body.style.overflow = 'hidden'; // Impede o scroll na página de fundo enquanto o modal está aberto.
+    if (termsModalOverlay) { // Verifica se termsModalOverlay existe
+        termsModalOverlay.classList.add('visible'); // Adiciona a classe 'visible' para exibir o overlay do modal.
+        document.body.style.overflow = 'hidden'; // Impede o scroll na página de fundo enquanto o modal está aberto.
+    }
 }
 
 /**
  * Fecha o modal de termos.
  */
 function closeModal() {
-    termsModalOverlay.classList.remove('visible'); // Remove a classe 'visible' para esconder o overlay do modal.
-    document.body.style.overflow = 'auto'; // Restaura o scroll na página de fundo.
+    if (termsModalOverlay) { // Verifica se termsModalOverlay existe
+        termsModalOverlay.classList.remove('visible'); // Remove a classe 'visible' para esconder o overlay do modal.
+        document.body.style.overflow = 'auto'; // Restaura o scroll na página de fundo.
+    }
 }
 
 // Event listeners para o modal:
-
-// Fecha o modal quando o botão de fechar é clicado.
-modalCloseBtn.addEventListener('click', closeModal);
-// Abre o modal quando o botão do rodapé é clicado.
-showTermsFooterBtn.addEventListener('click', openModal);
-// Adiciona o event listener ao botão inline, se ele existir na página.
-if (showTermsInlineBtn) {
-    showTermsInlineBtn.addEventListener('click', openModal);
-}
+// Adicionado verificação para garantir que os botões existem antes de adicionar os listeners
+if (modalCloseBtn) { modalCloseBtn.addEventListener('click', closeModal); }
+if (showTermsFooterBtn) { showTermsFooterBtn.addEventListener('click', openModal); }
+if (showTermsInlineBtn) { showTermsInlineBtn.addEventListener('click', openModal); } // Só adiciona se o elemento existir
 
 // Fechar o modal ao clicar fora do conteúdo do modal (no overlay).
 if (termsModalOverlay) { // Verifica se o overlay do modal existe antes de adicionar o ouvinte.
@@ -1234,11 +1258,87 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
+
+// --- Lógica do Feedback (AQUI ESTÁ A MUDANÇA ESSENCIAL!) ---
+// Assegure-se de que este bloco JavaScript está presente e completo.
+
+const feedbackForm = document.getElementById('feedback-form');
+const feedbackNameInput = document.getElementById('feedback-name');
+const feedbackMessageInput = document.getElementById('feedback-message');
+const feedbackStatusMessage = document.getElementById('feedback-status-message');
+const feedbackListDiv = document.getElementById('feedback-list');
+
+// Função para exibir mensagens de status (sucesso/erro ao enviar feedback)
+function showStatusMessage(message, type) {
+    if (feedbackStatusMessage) { // Adicionado verificação
+        feedbackStatusMessage.textContent = message;
+        // Reseta as classes e adiciona 'show' e o tipo (success/error)
+        feedbackStatusMessage.className = 'feedback-message text-center show';
+        feedbackStatusMessage.classList.add(type);
+        // Esconde a mensagem após 3 segundos
+        setTimeout(() => {
+            feedbackStatusMessage.classList.remove('show');
+        }, 3000);
+    }
+}
+
+// Função para criar e adicionar um item de feedback ao DOM
+function addFeedbackToDOM(name, message) {
+    if (feedbackListDiv) { // Adicionado verificação
+        const feedbackItem = document.createElement('div');
+        feedbackItem.classList.add('feedback-item');
+        feedbackItem.innerHTML = `
+            <p>${message}</p>
+            <span>- ${name}</span>
+        `;
+        feedbackListDiv.prepend(feedbackItem); // Adiciona o feedback mais recente no topo da lista
+    }
+}
+
+// Função para carregar feedbacks do localStorage quando a página é carregada
+function loadFeedbacks() {
+    const feedbacks = JSON.parse(localStorage.getItem('gmsFeedbacks')) || [];
+    // Itera sobre os feedbacks e os adiciona ao DOM
+    feedbacks.forEach(feedback => {
+        addFeedbackToDOM(feedback.name, feedback.message);
+    });
+}
+
+// Event listener para o envio do formulário de feedback
+if (feedbackForm) { // Adicionado verificação
+    feedbackForm.addEventListener('submit', function(event) {
+        event.preventDefault(); // Previne o comportamento padrão de recarregar a página
+
+        const name = feedbackNameInput.value.trim();
+        const message = feedbackMessageInput.value.trim();
+
+        if (name === '' || message === '') {
+            showStatusMessage('Por favor, preencha todos os campos.', 'error');
+            return;
+        }
+
+        // Adiciona o novo feedback ao DOM imediatamente
+        addFeedbackToDOM(name, message);
+
+        // Salva o feedback no localStorage
+        let feedbacks = JSON.parse(localStorage.getItem('gmsFeedbacks')) || [];
+        feedbacks.unshift({ name: name, message: message }); // Adiciona o novo feedback ao início do array
+        localStorage.setItem('gmsFeedbacks', JSON.stringify(feedbacks));
+
+        showStatusMessage('Obrigado pelo seu feedback!', 'success');
+
+        // Limpa o formulário após o envio
+        feedbackNameInput.value = '';
+        feedbackMessageInput.value = '';
+    });
+}
+
+
 // Chamadas iniciais
 // Garante que estas funções sejam executadas após o carregamento completo do DOM.
 document.addEventListener('DOMContentLoaded', () => {
     updateLoginDisplay(); // Atualiza a exibição do login/logout/admin ao carregar a página.
-    // loadFeedbacks(); // Esta linha foi removida pois a lógica de feedback foi excluída.
+    loadFeedbacks(); // Carrega os feedbacks existentes ao carregar a página. ESTA LINHA É CRUCIAL!
 });
     </script>
 </body>

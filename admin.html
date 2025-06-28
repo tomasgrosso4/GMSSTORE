@@ -123,6 +123,26 @@
             transform: translateY(-2px);
         }
 
+        /* Estilo para o novo botão de apagar feedbacks */
+        .btn-clear-feedbacks {
+            background-color: #f59e0b; /* Uma cor de aviso/laranja */
+            color: #fff;
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-decoration: none;
+            display: inline-block;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+        }
+        .btn-clear-feedbacks:hover {
+            background-color: #d97706; /* Laranja mais escuro no hover */
+            transform: translateY(-2px);
+        }
+
+
         /* Seções de gestão */
         .management-section {
             display: none; /* Oculto por padrão */
@@ -189,10 +209,11 @@
 
     <div class="admin-panel">
         <h2>Bem-vindo, Administrador!</h2>
-        <p>Aqui você pode gerir os utilizadores da sua loja GMS.</p>
+        <p>Aqui você pode gerir os utilizadores e outros aspetos da sua loja GMS.</p>
 
         <div class="admin-buttons">
             <button id="show-users-btn" class="admin-btn">Gerir Utilizadores</button>
+            <button id="clear-feedbacks-admin-btn" class="btn-clear-feedbacks">Apagar Feedbacks</button>
             <button id="logout-btn" class="btn-logout">Sair (Admin)</button>
         </div>
 
@@ -202,100 +223,111 @@
             </ul>
             <p id="no-users-message" class="text-gray-500 mt-4" style="display: none;">Não há utilizadores registados ainda.</p>
         </section>
+
+        <section id="feedbacks-management-section" class="management-section">
+            <h3>Gestão de Feedbacks</h3>
+            <p>Os feedbacks foram apagados. Esta seção pode ser expandida no futuro para exibir e gerir feedbacks individualmente.</p>
+            </section>
+
     </div>
 
     <script>
         // --- Proteção de Rota e Lógica de Navegação ---
         document.addEventListener('DOMContentLoaded', function() {
-            const isAdminLoggedIn = localStorage.getItem('isAdminLoggedIn'); // Obtém o status de administrador do localStorage.
-            const adminNavBtn = document.getElementById('admin-nav-btn'); // Seleciona o botão de navegação "Administrador".
-            const allManagementSections = document.querySelectorAll('.management-section'); // Seleciona todas as seções com a classe 'management-section'.
+            const isAdminLoggedIn = localStorage.getItem('isAdminLoggedIn');
+            const adminNavBtn = document.getElementById('admin-nav-btn');
+            const allManagementSections = document.querySelectorAll('.management-section');
 
             // Redireciona se o utilizador não for um administrador logado.
-            if (isAdminLoggedIn !== 'true') { // Verifica se o valor em localStorage para 'isAdminLoggedIn' NÃO é 'true'.
-                window.location.href = 'index.html'; // Redireciona o utilizador para a página inicial ('index.html').
-                return; // Interrompe a execução do script para evitar que o conteúdo do painel de administração seja carregado.
+            if (isAdminLoggedIn !== 'true') {
+                window.location.href = 'index.html';
+                return;
             }
 
             // Ativa o botão de navegação "Administrador" se ele existir.
-            if (adminNavBtn) { // Verifica se o 'adminNavBtn' foi encontrado.
-                adminNavBtn.classList.add('active'); // Adiciona a classe 'active' ao botão, o que geralmente altera sua aparência para indicar que é a página atual.
+            if (adminNavBtn) {
+                adminNavBtn.classList.add('active');
             }
 
             // Lógica para o botão "Sair (Admin)".
-            document.getElementById('logout-btn').addEventListener('click', function() { // Adiciona um ouvinte de evento de clique ao botão com o ID 'logout-btn'.
-                localStorage.removeItem('isAdminLoggedIn'); // Remove a flag de administrador do localStorage.
-                sessionStorage.removeItem('loggedInUserName'); // Remove o nome do utilizador logado da sessionStorage.
-                window.location.href = 'index.html'; // Redireciona o utilizador de volta para a página inicial após o logout.
+            document.getElementById('logout-btn').addEventListener('click', function() {
+                localStorage.removeItem('isAdminLoggedIn');
+                sessionStorage.removeItem('loggedInUserName');
+                window.location.href = 'index.html';
             });
 
             // --- Funções para gerir a visibilidade das seções ---
-            /**
-             * Oculta todas as seções de gestão no painel do administrador.
-             */
             function hideAllSections() {
-                allManagementSections.forEach(section => { // Itera sobre cada seção de gestão encontrada.
-                    section.style.display = 'none'; // Define a propriedade CSS 'display' de cada seção para 'none', tornando-a invisível.
+                allManagementSections.forEach(section => {
+                    section.style.display = 'none';
                 });
             }
 
-            /**
-             * Exibe uma seção de gestão específica e oculta todas as outras.
-             * @param {string} sectionId - O ID da seção HTML a ser exibida (e.g., 'users-section').
-             */
             function showSection(sectionId) {
-                hideAllSections(); // Primeiro, oculta todas as seções para garantir que apenas uma esteja visível por vez.
-                document.getElementById(sectionId).style.display = 'block'; // Define a propriedade CSS 'display' da seção especificada para 'block', tornando-a visível.
+                hideAllSections();
+                const section = document.getElementById(sectionId);
+                if (section) {
+                    section.style.display = 'block';
+                }
             }
 
             // --- Gestão de Utilizadores ---
-            const usersBtn = document.getElementById('show-users-btn'); // Seleciona o botão "Gerir Utilizadores".
-            const userList = document.getElementById('user-list'); // Seleciona a lista (<ul>) onde os utilizadores registados serão exibidos.
-            const noUsersMessageUserSection = document.getElementById('no-users-message'); // Seleciona a mensagem a ser exibida quando não há utilizadores.
+            const usersBtn = document.getElementById('show-users-btn');
+            const userList = document.getElementById('user-list');
+            const noUsersMessageUserSection = document.getElementById('no-users-message');
 
-            /**
-             * Renderiza (exibe) a lista de utilizadores registados na interface.
-             * Os dados dos utilizadores são carregados do localStorage.
-             */
             function renderUsers() {
-                userList.innerHTML = ''; // Limpa qualquer conteúdo existente na lista de utilizadores para evitar duplicações.
-                const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || []; // Recupera a lista de utilizadores do localStorage. Se não houver, inicializa como um array vazio.
+                if (!userList) return; // Verifica se o elemento existe antes de prosseguir
+                userList.innerHTML = '';
+                const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
 
-                if (registeredUsers.length === 0) { // Se não houver utilizadores registados:
-                    noUsersMessageUserSection.style.display = 'block'; // Exibe a mensagem "Não há utilizadores registados ainda.".
-                } else { // Se houver utilizadores:
-                    noUsersMessageUserSection.style.display = 'none'; // Oculta a mensagem de "nenhum utilizador".
-                    registeredUsers.forEach(user => { // Itera sobre cada utilizador no array 'registeredUsers'.
-                        const listItem = document.createElement('li'); // Cria um novo elemento de lista (<li>) para cada utilizador.
+                if (registeredUsers.length === 0) {
+                    if (noUsersMessageUserSection) noUsersMessageUserSection.style.display = 'block';
+                } else {
+                    if (noUsersMessageUserSection) noUsersMessageUserSection.style.display = 'none';
+                    registeredUsers.forEach(user => {
+                        const listItem = document.createElement('li');
                         listItem.innerHTML = `
                             <span><strong>Nome:</strong> ${user.name}</span>
                             <span><strong>Email:</strong> ${user.email}</span>
                             <button class="text-red-600 hover:text-red-800 ml-auto" onclick="deleteUser('${user.email}')">Remover</button>
-                        `; // Define o conteúdo HTML do item da lista, incluindo o nome, email do utilizador e um botão "Remover".
-                        userList.appendChild(listItem); // Adiciona o item da lista (<li>) à lista de utilizadores (<ul>).
+                        `;
+                        userList.appendChild(listItem);
                     });
                 }
             }
 
-            // Adiciona um ouvinte de evento de clique ao botão "Gerir Utilizadores".
-            usersBtn.addEventListener('click', function() {
-                showSection('users-section'); // Exibe a seção de gestão de utilizadores.
-                renderUsers(); // Chama a função para carregar e exibir a lista de utilizadores.
-            });
+            if (usersBtn) { // Verifica se o botão existe
+                usersBtn.addEventListener('click', function() {
+                    showSection('users-section');
+                    renderUsers();
+                });
+            }
 
-            /**
-             * Remove um utilizador registado do localStorage.
-             * @param {string} email - O email do utilizador a ser removido.
-             */
-            window.deleteUser = function(email) { // Torna a função global para que possa ser chamada por 'onclick' no HTML.
-                if (confirm(`Tem certeza que deseja remover o utilizador com email: ${email}?`)) { // Exibe uma caixa de confirmação antes de remover o utilizador.
-                    let users = JSON.parse(localStorage.getItem('registeredUsers')) || []; // Carrega a lista atual de utilizadores do localStorage.
-                    users = users.filter(user => user.email !== email); // Filtra a lista, criando uma nova lista que exclui o utilizador com o email fornecido.
-                    localStorage.setItem('registeredUsers', JSON.stringify(users)); // Salva a lista de utilizadores atualizada (sem o utilizador removido) de volta no localStorage.
-                    alert(`Utilizador ${email} removido com sucesso.`); // Exibe um alerta de sucesso.
-                    renderUsers(); // Chama 'renderUsers' novamente para atualizar a lista exibida no painel.
+            window.deleteUser = function(email) {
+                if (confirm(`Tem certeza que deseja remover o utilizador com email: ${email}?`)) {
+                    let users = JSON.parse(localStorage.getItem('registeredUsers')) || [];
+                    users = users.filter(user => user.email !== email);
+                    localStorage.setItem('registeredUsers', JSON.stringify(users));
+                    alert(`Utilizador ${email} removido com sucesso.`);
+                    renderUsers();
                 }
             };
+
+            // --- Lógica para Apagar Feedbacks (ADICIONADO AQUI!) ---
+            const clearFeedbacksAdminBtn = document.getElementById('clear-feedbacks-admin-btn');
+            if (clearFeedbacksAdminBtn) {
+                clearFeedbacksAdminBtn.addEventListener('click', function() {
+                    if (confirm('Tem a certeza que quer apagar TODOS os feedbacks? Esta ação é irreversível.')) {
+                        localStorage.removeItem('gmsFeedbacks'); // Remove a chave 'gmsFeedbacks'
+                        alert('Todos os feedbacks foram apagados com sucesso!');
+                        // Opcional: pode manter a secção de utilizadores visível ou recarregar a página
+                        // window.location.reload(); // Removido para não recarregar a página automaticamente e permitir outras ações
+                        showSection('feedbacks-management-section'); // Mostra uma seção de confirmação ou gestão de feedbacks
+                    }
+                });
+            }
+
 
             // Inicialmente, oculta todas as seções de gestão quando a página carrega.
             hideAllSections();
