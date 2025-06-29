@@ -37,7 +37,7 @@
             font-weight: 500;
             transition: all 0.3s ease;
             text-decoration: none;
-            white-space: nowrap; /* Added to prevent line breaks in navigation buttons */
+            white-space: nowrap;
         }
         .nav-btn:hover {
             background-color: #F3F4F6;
@@ -155,13 +155,14 @@
             <div id="empty-cart-message" class="text-center text-gray-600 mb-4 hidden">O seu carrinho está vazio.</div>
 
             <div id="cart-items" class="space-y-6 mb-8">
-                </div>
+            </div>
 
             <div class="text-right text-2xl font-bold text-gray-900 mb-8">
                 Total: <span id="cart-total">€0.00</span>
             </div>
 
-            <div id="feedbackMessage" class="feedback-message hidden"></div> <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <div id="feedbackMessage" class="feedback-message hidden"></div>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
                 <a href="produtos.html" class="btn-primary bg-gray-200 text-gray-800 hover:bg-gray-300 hover:text-gray-900">Continuar Comprando</a>
                 <button id="checkout-button" class="btn-primary" disabled>Finalizar Compra</button>
             </div>
@@ -187,7 +188,7 @@
                 <div class="payment-option" data-method="mbway">
                     <input type="radio" id="mbway" name="payment-method" value="mbway">
                     <label for="mbway" class="font-medium text-lg flex-grow">MB Way</label>
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/MB_Way_Logo.svg/200px-MB_Way_Logo.svg.png" alt="MB Way" class="h-8">
+                    <img src="https://img.icons8.com/color/48/mb-way.png" alt="MB Way" class="h-8 w-auto"> 
                 </div>
                 <div class="payment-option" data-method="paypal">
                     <input type="radio" id="paypal" name="payment-method" value="paypal">
@@ -349,6 +350,7 @@
                     cart[itemIndex].quantity = newQuantity;
                 }
                 localStorage.setItem('cart', JSON.stringify(cart));
+                showFeedback('Carrinho atualizado!', 'success'); // Adiciona feedback
                 loadAndRenderCart(); // Recarrega e renderiza o carrinho
             }
         }
@@ -365,6 +367,7 @@
             cart = cart.filter(item => item.id !== itemId);
             
             localStorage.setItem('cart', JSON.stringify(cart));
+            showFeedback('Item removido do carrinho!', 'success'); // Adiciona feedback
             loadAndRenderCart(); // Recarrega e renderiza o carrinho
         }
 
@@ -434,11 +437,12 @@
 
                 // Fechar o modal
                 checkoutModal.classList.remove('show');
-
+                showFeedback('A sua compra foi realizada com sucesso!', 'success'); // Feedback de sucesso
+                
                 // Opcional: Redirecionar para uma página de confirmação ou para o início
                 // window.location.href = 'pagina-confirmacao.html';
             } else {
-                alert('Por favor, selecione um método de pagamento.');
+                showFeedback('Por favor, selecione um método de pagamento.', 'error'); // Feedback de erro
             }
         });
 

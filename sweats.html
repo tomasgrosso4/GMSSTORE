@@ -36,10 +36,22 @@
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* Sombra mais pronunciada */
             padding: 1.5rem;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex; /* Adicionado para flexbox */
+            flex-direction: column; /* Organiza itens em coluna */
+            align-items: center; /* Centraliza horizontalmente */
+            text-align: center; /* Centraliza texto */
+            height: 100%; /* Garante que o cartão preencha a altura disponível na grid */
+            justify-content: space-between; /* Distribui o espaço para empurrar o botão para baixo */
         }
         .product-card:hover {
             transform: translateY(-5px); /* Efeito de elevação ao passar o mouse */
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .product-card img {
+            max-width: 100%; /* Garante que a imagem não ultrapasse o cartão */
+            height: 250px; /* **Altura fixa para a imagem** - CRUCIAL para alinhamento */
+            object-fit: contain; /* Garante que a imagem se ajuste sem cortar, mantendo a proporção */
+            margin-bottom: 1rem; /* Ajuste para dar um pequeno espaço da imagem ao texto */
         }
         /* Estilos para os botões de navegação no header */
         .nav-btn {
@@ -87,51 +99,51 @@
 
         <section class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-8">
             <div class="product-card">
-                <img src="https://placehold.co/400x400/E0E0E0/333333?text=Sweat+Branca" alt="Sweat Branca GMS" class="rounded-xl mb-4 w-full h-auto object-cover" />
-                <h3 class="text-2xl font-bold text-gray-900">Sweat Branca Essencial</h3>
-                <p class="text-gray-600 mt-2">Conforto e estilo para os dias mais frios.</p>
+                <img src="sweat-simples.jpg" alt="Sweat Simples GMS" class="rounded-xl w-full object-cover" />
+                <h3 class="text-2xl font-bold text-gray-900">Sweat Cinza Simples</h3>
+                <p class="text-gray-600 mt-2">Um estilo minimalista para o conforto do dia a dia.</p>
                 <p class="mt-4 font-extrabold text-2xl text-gray-900">€39.99</p>
-                <a href="sweat-branca.html" class="mt-6 w-full btn-primary text-center block">Ver Produto</a>
+                <a href="sweat-cinza.html" class="mt-auto w-full btn-primary text-center block">Ver Produto</a>
             </div>
 
             <div class="product-card">
-                <img src="https://placehold.co/400x400/333333/E0E0E0?text=Sweat+Preta" alt="Sweat Preta GMS" class="rounded-xl mb-4 w-full h-auto object-cover" />
+                <img src="sweat-black.jpg" alt="Sweat Preta GMS" class="rounded-xl w-full object-cover" />
                 <h3 class="text-2xl font-bold text-gray-900">Sweat Preta Clássica</h3>
-                <p class="text-gray-600 mt-2">Elegância e aquecimento para qualquer ocasião.</p>
+                <p class="text-gray-600 mt-2">A elegância do preto para um look versátil e moderno.</p>
                 <p class="mt-4 font-extrabold text-2xl text-gray-900">€41.99</p>
-                <a href="sweat-preta.html" class="mt-6 w-full btn-primary text-center block">Ver Produto</a>
+                <a href="sweat-preta.html" class="mt-auto w-full btn-primary text-center block">Ver Produto</a>
             </div>
 
             <div class="product-card">
-                <img src="https://placehold.co/400x400/F5DEB3/333333?text=Sweat+Bege" alt="Sweat Bege GMS" class="rounded-xl mb-4 w-full h-auto object-cover" />
-                <h3 class="text-2xl font-bold text-gray-900">Sweat Bege Casual</h3>
-                <p class="text-gray-600 mt-2">Perfeita para um look descontraído e quentinho.</p>
-                <p class="mt-4 font-extrabold text-2xl text-gray-900">€38.50</p>
-                <a href="sweat-bege.html" class="mt-6 w-full btn-primary text-center block">Ver Produto</a>
+                <img src="sweat-ronaldo.jpg" alt="Sweat Ronaldo GMS" class="rounded-xl w-full object-cover" />
+                <h3 class="text-2xl font-bold text-gray-900">Sweat Bege Ronaldo Edition</h3>
+                <p class="text-gray-600 mt-2">Celebre o espírito de campeão com esta sweat exclusiva.</p>
+                <p class="mt-4 font-extrabold text-2xl text-gray-900">€45.00</p>
+                <a href="sweat-verde.html" class="mt-auto w-full btn-primary text-center block">Ver Produto</a>
             </div>
 
             <div class="product-card">
-                <img src="https://placehold.co/400x400/000080/FFFFFF?text=Sweat+Azul" alt="Sweat Azul Marinho GMS" class="rounded-xl mb-4 w-full h-auto object-cover" />
-                <h3 class="text-2xl font-bold text-gray-900">Sweat Azul Marinho</h3>
-                <p class="text-gray-600 mt-2">Um toque de sofisticação para o inverno.</p>
+                <img src="sweat-cereja.jpg" alt="Sweat Cereja GMS" class="rounded-xl w-full object-cover" />
+                <h3 class="text-2xl font-bold text-gray-900">Sweat Preta Cereja</h3>
+                <p class="text-gray-600 mt-2">Um toque de cor e originalidade para o seu guarda-roupa.</p>
                 <p class="mt-4 font-extrabold text-2xl text-gray-900">€42.50</p>
-                <a href="sweat-azul.html" class="mt-6 w-full btn-primary text-center block">Ver Produto</a>
+                <a href="sweat-azul.html" class="mt-auto w-full btn-primary text-center block">Ver Produto</a>
             </div>
 
             <div class="product-card">
-                <img src="https://placehold.co/400x400/6B8E23/FFFFFF?text=Sweat+Verde" alt="Sweat Verde Oliva GMS" class="rounded-xl mb-4 w-full h-auto object-cover" />
-                <h3 class="text-2xl font-bold text-gray-900">Sweat Verde Oliva</h3>
-                <p class="text-gray-600 mt-2">Estilo e conforto inspirados na natureza.</p>
-                <p class="mt-4 font-extrabold text-2xl text-gray-900">€40.00</p>
-                <a href="sweat-verde.html" class="mt-6 w-full btn-primary text-center block">Ver Produto</a>
+                <img src="sweat-rosa.jpg" alt="Sweat Rosa GMS" class="rounded-xl w-full object-cover" />
+                <h3 class="text-2xl font-bold text-gray-900">Sweat Rosa "No Excuses"</h3>
+                <p class="text-gray-600 mt-2">Mantenha-se motivado com a sweat que te impulsiona para os resultados.</p>
+                <p class="mt-4 font-extrabold text-2xl text-gray-900">€38.00</p>
+                <a href="sweat-branca.html" class="mt-auto w-full btn-primary text-center block">Ver Produto</a>
             </div>
 
             <div class="product-card">
-                <img src="https://placehold.co/400x400/A9A9A9/333333?text=Sweat+Cinza" alt="Sweat Cinza Mescla GMS" class="rounded-xl mb-4 w-full h-auto object-cover" />
-                <h3 class="text-2xl font-bold text-gray-900">Sweat Cinza Mescla</h3>
-                <p class="text-gray-600 mt-2">Ideal para o dia a dia, com conforto extra no inverno.</p>
-                <p class="mt-4 font-extrabold text-2xl text-gray-900">€37.99</p>
-                <a href="sweat-cinza.html" class="mt-6 w-full btn-primary text-center block">Ver Produto</a>
+                <img src="sweat-cara.jpg" alt="Sweat Cara GMS" class="rounded-xl w-full object-cover" />
+                <h3 class="text-2xl font-bold text-gray-900">Sweat Bege "By Artist"</h3>
+                <p class="text-gray-600 mt-2">Uma peça de arte para vestir, criada com respeito e estilo.</p>
+                <p class="mt-4 font-extrabold text-2xl text-gray-900">€40.50</p>
+                <a href="sweat-bege.html" class="mt-auto w-full btn-primary text-center block">Ver Produto</a>
             </div>
         </section>
     </main>

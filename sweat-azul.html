@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>GMS - Sweat Branca Essencial</title>
+    <title>GMS - Sweat Cereja GMS</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
@@ -82,7 +82,7 @@
         .image-gallery .main-image {
             width: 100%;
             height: 400px;
-            object-fit: cover;
+            object-fit: contain; /* Alterado para 'contain' para mostrar a imagem completa */
             border-radius: 1rem;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             margin-bottom: 1rem;
@@ -148,18 +148,17 @@
     <main class="max-w-4xl mx-auto mt-16 p-4 bg-white rounded-3xl shadow-lg flex flex-col md:flex-row items-center md:items-start gap-8">
         <div class="md:w-1/2">
             <div class="image-gallery">
-                <img id="mainSweatImage" src="https://placehold.co/600x600/E0E0E0/333333?text=Sweat+Branca+1" alt="Sweat Branca Essencial - Vista Principal" class="main-image" />
+                <img id="mainSweatImage" src="sweat-cereja.jpg" alt="Sweat Preta Cereja class="main-image" />
                 <div class="thumbnails">
-                    <img src="https://placehold.co/100x100/E0E0E0/333333?text=Sweat+Branca+1" alt="Miniatura 1" class="thumbnail active" data-full-src="https://placehold.co/600x600/E0E0E0/333333?text=Sweat+Branca+1" />
-                    <img src="https://placehold.co/100x100/CCCCCC/666666?text=Sweat+Branca+2" alt="Miniatura 2" class="thumbnail" data-full-src="https://placehold.co/600x600/CCCCCC/666666?text=Sweat+Branca+2" />
-                    <img src="https://placehold.co/100x100/BBBBBB/555555?text=Sweat+Branca+3" alt="Miniatura 3" class="thumbnail" data-full-src="https://placehold.co/600x600/BBBBBB/555555?text=Sweat+Branca+3" />
+                    <img src="sweat-cereja.jpg" alt="Miniatura Frente" class="thumbnail active" data-full-src="sweat-cereja.jpg" />
+                    <img src="sweat-cereja-tras.jpg" alt="Miniatura Trás" class="thumbnail" data-full-src="sweat-cereja-tras.jpg" />
                 </div>
             </div>
         </div>
         <div class="md:w-1/2 text-center md:text-left">
-            <h2 class="text-4xl font-extrabold mb-4 text-gray-900" id="product-name">Sweat Branca Essencial</h2>
-            <p class="text-lg text-gray-700 mb-6" id="product-description">Esta sweat branca é a peça perfeita para o seu guarda-roupa de inverno. Feita com tecido macio e aconchegante, oferece conforto e estilo para o dia a dia. Ideal para combinar com qualquer look.</p>
-            <p class="text-4xl font-extrabold text-gray-900 mb-6" id="product-price" data-price="39.99">€39.99</p>
+            <h2 class="text-4xl font-extrabold mb-4 text-gray-900" id="product-name">Sweat Preta Cereja</h2>
+            <p class="text-lg text-gray-700 mb-6" id="product-description">Um toque de cor e originalidade para o seu guarda-roupa.</p>
+            <p class="text-4xl font-extrabold text-gray-900 mb-6" id="product-price" data-price="€42.50">€42.50</p>
 
             <div class="mb-6">
                 <h3 class="text-xl font-semibold text-gray-800 mb-3">Selecione o Tamanho:</h3>
@@ -189,14 +188,12 @@
         const mainNav = document.getElementById('main-nav');
         const loginBtn = document.getElementById('login-btn');
         const userInfoSpan = document.getElementById('user-info');
-        // Usamos um ID específico para o botão de Contacto, pois ele é o ponto de referência final
         const contactBtnStatic = document.getElementById('contact-btn-static');
 
         function updateLoginDisplay() {
             const loggedInUserName = sessionStorage.getItem('loggedInUserName');
             const isAdminLoggedIn = localStorage.getItem('isAdminLoggedIn');
 
-            // Remove botões de logout e admin existentes para evitar duplicatas
             let existingLogoutBtn = document.getElementById('logout-btn');
             if (existingLogoutBtn) { existingLogoutBtn.remove(); }
             let existingAdminBtn = document.getElementById('admin-btn');
@@ -204,7 +201,7 @@
 
             if (loggedInUserName) {
                 userInfoSpan.textContent = `Olá, ${loggedInUserName}!`;
-                loginBtn.style.display = 'none'; // Esconde o botão de login
+                loginBtn.style.display = 'none';
 
                 const logoutButton = document.createElement('a');
                 logoutButton.href = "#";
@@ -218,7 +215,6 @@
                     alert('Sessão encerrada.');
                     window.location.reload();
                 });
-                // Insere o botão de logout *antes* do botão de contacto estático
                 mainNav.insertBefore(logoutButton, contactBtnStatic);
 
                 if (isAdminLoggedIn === 'true') {
@@ -227,13 +223,11 @@
                     adminButton.classList.add('nav-btn');
                     adminButton.id = 'admin-btn';
                     adminButton.textContent = "Administrador";
-                    // Insere o botão de administrador *antes* do botão de logout
-                    // Se logoutButton não existir (o que não deve acontecer aqui), ele inserirá antes de contactBtnStatic
                     mainNav.insertBefore(adminButton, logoutButton);
                 }
             } else {
                 userInfoSpan.textContent = '';
-                loginBtn.style.display = 'inline-block'; // Mostra o botão de login
+                loginBtn.style.display = 'inline-block';
             }
         }
 
@@ -249,7 +243,6 @@
         let selectedSize = null;
 
         document.addEventListener('DOMContentLoaded', function() {
-            // Chama a função para atualizar a navegação no carregamento da página
             updateLoginDisplay();
 
             // --- Funções da Galeria de Imagens ---
@@ -308,7 +301,8 @@
                         name: productName,
                         price: productPrice,
                         size: selectedSize,
-                        imageUrl: mainImage.src,
+                        // Garante que a imagem guardada é sempre a da frente da sweat cereja
+                        imageUrl: "sweat-cereja.jpg", 
                         quantity: 1
                     };
                     cart.push(newItem);
